@@ -1,0 +1,2 @@
+avr-as -mmcu=avr4 (source file .s) -o (resulting object file .o)
+avr-ld (all the object files) -o firmware.elf -T script.ld

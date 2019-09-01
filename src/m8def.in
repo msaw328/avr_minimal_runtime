@@ -1,0 +1,16 @@
+; memory/hw definitions for atmega8 ; made to be included in other files, instead of compiled on its own
+
+.equ XH,        r26
+.equ XL,        r27
+.equ YH,        r28
+.equ YL,        r29
+.equ ZH,        r30
+.equ ZL,        r31
+
+.equ REG_SIZE,  0x20                            ; size of register file, 32 registers
+.equ IO_SIZE,   0x40                            ; size of IO memory, 64 registers
+.equ SRAM_SIZE, 0x400                           ; size of SRAM, 1024 bytes
+.equ RAMEND,    REG_SIZE + IO_SIZE + SRAM_SIZE  ; first NOT available SRAM address
+.equ RAMSTART,  REG_SIZE + IO_SIZE              ; first avaialble SRAM address
+.equ SPH,       0x3E
+.equ SPL,       0x3D

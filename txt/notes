@@ -1,0 +1,3 @@
+hex files use LMAs, which are specified in the linker script, thats why .data ends up being directly after .text in hex file
+despite having VMA of 0x800000. The line in linker script responsible is "AT (ADDR(.text) + SIZEOF(.text))" (so .data will
+be put in the same address space as .text, theyre both going to flash)
