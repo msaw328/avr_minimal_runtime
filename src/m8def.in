@@ -1,4 +1,5 @@
 ; memory/hw definitions for atmega8 ; made to be included in other files, instead of compiled on its own
+; used in runtime.s
 
 .equ XH,        r26
 .equ XL,        r27

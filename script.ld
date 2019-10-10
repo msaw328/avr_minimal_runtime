@@ -11,7 +11,7 @@ SECTIONS
     {
         _text = .;
         *(.vectors)
-        *(.text)
+        *(.text*)
         _etext = .;
     } > flash
 
@@ -19,7 +19,11 @@ SECTIONS
     AT (ADDR(.text) + SIZEOF(.text))
     {
         _data = .;
-        *(.data)
+        *(.data*)
+        *(.bss*)
+        *(.rodata*)
         _edata = .;
     } > sram
 }
+
+ENTRY(_init)

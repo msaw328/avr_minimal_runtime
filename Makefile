@@ -1,27 +1,44 @@
 .PHONY := dir all clear
 .DEFAULT_GOAL = all
 
-SRC_FILES := src/main.s src/runtime.s src/vectors.s
-OBJ_FILES := $(SRC_FILES:src/%.s=obj/%.o)
+# build directories
+DIRS := build obj obj/as obj/cc
 
-AS := avr-as # use the avr toolchain
+# AVR toolchain
+CC := avr-gcc
+AS := avr-as
 LD := avr-ld
 
+# flags
 # atmega8a is avr4 according to https://www.microchip.com/webdoc/AVRLibcReferenceManual/using_tools_1using_avr_gcc_mach_opt.html
+CC_FLAGS := -std=c99 -c -Wall -Werror -mmcu=atmega8 -Os -nostartfiles
 AS_FLAGS := -mmcu=avr4
 LD_FLAGS := -T script.ld
 
+# source files for assembly and C
+CC_SRC_FILES := src/main.c
+AS_SRC_FILES := src/runtime.s src/vectors.s
+
+# object files
+CC_OBJ_FILES := $(CC_SRC_FILES:src/%.c=obj/cc/%.o)
+AS_OBJ_FILES := $(AS_SRC_FILES:src/%.s=obj/as/%.o)
+
+# ~~~~~object files and linking
+obj/cc/%.o: src/%.c ;
+	$(CC) $(CC_FLAGS) $^ -o $@
+
 # have to cd to src and then preface target/sources with ../ otherwise it breaks includes in assembly files
-obj/%.o: src/%.s ;
+obj/as/%.o: src/%.s ;
 	cd src && $(AS) $(AS_FLAGS) ../$^ -o ../$@
 
-dir:
-	mkdir -p build obj
-
-build/firmware.elf: $(OBJ_FILES) ;
+build/firmware.elf: $(AS_OBJ_FILES) $(CC_OBJ_FILES);
 	$(LD) $(LD_FLAGS) $^ -o $@
 
-all: dir build/firmware.elf
+# ~~~~~phony targets - utility
+dir:
+	mkdir -p $(DIRS)
 
-clear: ;
-	rm obj bin -rf
+clear:
+	rm -rf $(DIRS)
+
+all: dir build/firmware.elf
