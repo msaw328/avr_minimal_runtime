@@ -26,7 +26,6 @@
 __vectors:
     # reset interrupt shouldn't be overwritten (thats the job of the bootloader) so i hardcode it
     rjmp    ISR_builtin_reset
-    vector  __vector_1
     vector  __vector_2
     vector  __vector_3
     vector  __vector_4
@@ -44,6 +43,7 @@ __vectors:
     vector  __vector_16
     vector  __vector_17
     vector  __vector_18
+    vector  __vector_19
 
 .section .text,"ax",@progbits
 .global ISR_builtin_null
