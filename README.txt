@@ -13,3 +13,5 @@ vectors.s sets up a vector table, main.s provides a main function and some basic
 m8def.in is a file to be included by other source files, contains defines for IO registers and memory sizes for atmega8a (taken from datasheet)
 
 build with "make all", clear with "make clear"
+
+// TODO:Explain in detail atmega8 boot process, memory layout etc. in this README with code references
