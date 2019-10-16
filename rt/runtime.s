@@ -28,6 +28,7 @@ copy_loop_comp:
     cpc     XL, r17
 
     brlo    copy_loop_store     ; branch if lower (unsigned less than) - if X is less than _edata we loop again
+    sei
     rcall   main                ; if all data copied, call main (defined in other file)
 exitloop:
     rjmp exitloop
